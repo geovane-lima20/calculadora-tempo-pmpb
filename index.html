@@ -1,0 +1,171 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calculadora de Tempo de Serviço — PMPB</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1 id = "cabeça">Calculadora de Tempo de Serviço da PMPB</h1>
+    <p class="muted">Insira a Data de Inclusão e os acréscimos/deduções, conforme o registrado em seu histórico funcional, através das publicações em BOL PM:</p>
+
+    <div class="card">
+
+        <h2>📅 Dados iniciais</h2>
+
+        <label>Data de inclusão *</label>
+        <input id="dataInclusao" type="date" />
+
+        <div id = "tipo-calculo">
+
+            <p id = "tituloTipoCalculo"><strong>Tipo de cálculo:</strong></p>
+
+        <div class = "opções">
+
+            <label>
+                <input type="radio" name="tipoCalculo" value="promocao" checked>
+                    <span>Tempo para a promoção requerida</span>
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="tipoCalculo" value="reserva">
+                    <span>Tempo para a reserva remunerada</span>
+            </label>
+        </div>
+    </div>
+
+    </div>
+    
+    <div class="card">
+    
+        <h2>➕ Acréscimos</h2>
+    
+        <label>Averbação (em dias)</label>
+        <div class="table-wrapper">
+            <table id="tabelaAcr">
+                <thead>
+                    <tr> 
+                        <th>Tipo de averbação</th>
+                        <th style="width:150px">Dias</th>
+                        <th style="width:150px">Data do BOL PM</th>
+                        <th style="width:80px">Ação</th>
+                    </tr>
+                </thead>
+                    <tbody></tbody>
+            </table>
+        </div>
+    
+        <div class="actions">
+            <button id="addAcr" class="btn">+ Adicionar averbação</button>
+        </div>
+
+
+        <label>Computação em dobro de férias (válidas ao completar o período concessivo até 1998)</label>
+        <div class="table-wrapper">
+            <table id="tabelaCompFerias">
+                <thead>
+                    <tr> 
+                        <th>Exercício</th>
+                        <th style="width:150px">Data do BOL PM</th>
+                        <th style="width:80px">Ação</th>
+                    </tr>
+                </thead>
+                    <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="actions">
+            <button id="addCompFerias" class="btn">+ Adicionar computação em dobro de férias</button>
+        </div>
+
+        <label>Computação em dobro de licença especial (válida ao completar o período concessivo até 1998)</label>
+        <div class="table-wrapper">
+                <table id="tabelaCompLic">
+                <thead>
+                    <tr> 
+                        <th>Decênio</th>
+                        <th style="width:300px">Meses computados</th>
+                        <th style="width:150px">Data do BOL PM</th>
+                        <th style="width:80px">Ação</th>
+                    </tr>
+                </thead>
+                    <tbody></tbody>
+            </table>
+        </div>
+        <div class="actions">
+            <button id="addCompLic" class="btn">+ Adicionar computação em dobro de licença especial</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>➖ Deduções</h2>
+    
+        <label>Períodos de dedução (início → fim)</label>
+        <div class="table-wrapper">
+            <table id="tabelaDed">
+                <thead>
+                    <tr>
+                        <th>Tipo de dedução</th>
+                        <th style="width:150px">Data início</th>
+                        <th style="width:150px">Data fim</th>
+                        <th style="width:80px">Dias</th>
+                        <th style="width:80px">Ação</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    
+        <div class="actions">
+            <button id="addDed" class="btn">+ Adicionar período deduzido</button>
+        </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+        <button id="calcular" class="btn">Calcular</button>
+        <button id="limpar" class="btn ghost">Limpar</button>
+    </div>
+
+    <div id="saida" class="result bloco-animado">
+        
+        <h2>📊 Resultado</h2>
+        
+        <div class="resumo">
+            <div class="resumo-item">
+                <strong>Tempo de efetivo serviço: </strong> <span id="efetivoServico"></span>
+            </div>
+            <div class="resumo-item">
+                <strong>Tempo de atividade militar: </strong> <span id="atividadeMilitar"></span>
+            </div>
+            <div class="resumo-item">
+                <strong>Averbações de tempo de serviço civil: </strong> <span id="averbacaoCivil"></span>
+            </div>
+            <div class="resumo-item">
+                <strong>Computações em dobro: </strong> <span id="computacao"></span>
+            </div>
+
+            <div class="resumo-item">
+                <strong>Total de deduções de tempo de serviço: </strong> <span id="deducoes"></span>
+            </div>
+        </div>
+
+        <div class="resumo">
+            <div class="resumo-item">
+                <strong>Tempo de serviço total: </strong> <span id="totalDias"></span> (<span id="convTempo"></span>)
+            </div>
+        </div>
+
+    </div>
+
+    <div id="saida2" class="result bloco-animado">
+        <div id="promocaoOuReserva"></div>
+        <div class="muted" style="margin-top:6px;">Conversão usada: 1 ano = 365 dias, conforme o art. 121, § 3º, da Lei nº 3.909, de 14 de julho de 1977 (Estatuto da PMPB).</div>
+            
+        <div style="margin-top:8px;"><strong>Detalhes:</strong></div>
+        <ul id="detalhes"></ul>
+    </div>
+    <script src = "js/script.js"></script>
+</body>
+</html>
